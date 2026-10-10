@@ -251,7 +251,7 @@
         </div>
     </div>
 
-    <!-- SECRET ADMIN DRAWER (PERMANENTLY LOCKED & HIDDEN BY DEFAULT) -->
+    <!-- SECRET ADMIN DRAWER (CLOSED BY DEFAULT) -->
     <div id="adminDrawer" class="fixed inset-y-0 right-0 w-full max-w-xl bg-toyota-black border-l border-toyota-border shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
         <div class="p-5 border-b border-toyota-border flex items-center justify-between bg-toyota-cardBg">
             <div class="flex items-center space-x-3">
@@ -849,7 +849,9 @@
             closeModal('qrModal');
         }
 
+        // 100% BULLETPROOF EXPORT FUNCTION
         function exportFullCode() {
+            // 1. Pull latest inputs from the admin form into appData
             appData.profile.photo = document.getElementById('edit-photo').value || appData.profile.photo;
             appData.profile.name = document.getElementById('edit-name').value || appData.profile.name;
             appData.profile.title = document.getElementById('edit-title').value || appData.profile.title;
@@ -866,18 +868,27 @@
 
             saveData();
 
+            // 2. Temporarily close the admin drawer in the DOM clone so the copied code is ALWAYS closed
+            const drawer = document.getElementById('adminDrawer');
+            const wasOpen = !drawer.classList.contains('translate-x-full');
+            drawer.classList.add('translate-x-full');
+
+            // 3. Capture the full HTML code of the page
             let docCopy = document.documentElement.outerHTML;
 
-            // Force admin drawer to be closed (translate-x-full) in the exported code
-            docCopy = docCopy.replace(/id="adminDrawer"\s+class="[^"]*"/, 'id="adminDrawer" class="fixed inset-y-0 right-0 w-full max-w-xl bg-toyota-black border-l border-toyota-border shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col"');
+            // Restore drawer state on the live screen so you don't get disrupted
+            if (wasOpen) {
+                drawer.classList.remove('translate-x-full');
+            }
 
+            // 4. Update the hardcoded appData variable script block with your exact changes
             const appDataJSON = JSON.stringify(appData, null, 4);
             const scriptReplacement = `<script id="appDataScript">\n        let appData = ${appDataJSON};\n    <\/script>`;
-
             docCopy = docCopy.replace(/<script id="appDataScript">[\s\S]*?<\/script>/, scriptReplacement);
 
+            // 5. Copy the fully baked, secure code to clipboard
             copyToClipboardFallback("<!DOCTYPE html>\n<html lang=\"en\" class=\"scroll-smooth dark\">\n" + docCopy + "\n</html>");
-            showToast("GitHub Code Copied! Admin Drawer is strictly locked/closed.");
+            showToast("Success! Code copied. Admin panel is permanently locked/closed.");
         }
 
         function showToast(msg) {
