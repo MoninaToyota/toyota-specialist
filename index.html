@@ -1,209 +1,888 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toyota Marketing Specialist</title>
+    <title>Toyota Marketing Specialist | Official Digital Showroom</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- QRCode JS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        toyota: {
+                            red: '#EB0A1E',
+                            darkRed: '#B30817',
+                            black: '#0D0D0D',
+                            cardBg: '#171717',
+                            border: '#262626'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Custom sleek scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0d0d;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #262626;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #eb0a1e;
+        }
+        
+        .glass-panel {
+            background: rgba(23, 23, 23, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .badge-pulse {
+            animation: pulse-red 2s infinite;
+        }
+        @keyframes pulse-red {
+            0% { box-shadow: 0 0 0 0 rgba(235, 10, 30, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(235, 10, 30, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(235, 10, 30, 0); }
+        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-800 font-sans antialiased min-h-screen flex flex-col">
+<body class="bg-toyota-black text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-toyota-red selection:text-white">
 
-    <!-- Header / Navbar -->
-    <header class="bg-red-700 text-white sticky top-0 z-40 shadow-md">
-        <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
-            <!-- Triple-Tap Target Logo -->
-            <div id="logo-trigger" class="flex items-center space-x-2 cursor-pointer select-none">
-                <i class="fa-solid font-bold text-2xl">🚗</i>
-                <span class="font-bold text-lg tracking-wider">TOYOTA SPECIALIST</span>
+    <header class="sticky top-0 z-40 bg-toyota-black/90 backdrop-blur-md border-b border-toyota-border">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            
+            <!-- Secret Trigger Logo: Triple click/tap top-left Toyota logo -->
+            <div id="secretLogoTrigger" class="flex items-center space-x-3 cursor-pointer select-none group" title="Triple click for Secret Admin Access">
+                <div class="w-10 h-10 rounded-xl bg-toyota-red/10 border border-toyota-red/30 flex items-center justify-center transition-transform group-hover:scale-105 active:scale-95">
+                    <i class="fa-solid fa-car-side text-toyota-red text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-black text-lg tracking-wider text-white uppercase block leading-none">TOYOTA</span>
+                    <span class="text-[10px] text-slate-400 font-semibold tracking-widest uppercase">Official Specialist</span>
+                </div>
             </div>
-            <nav class="hidden md:flex space-x-4 text-sm font-semibold">
-                <a href="#profile" class="hover:text-gray-200">Profile</a>
-                <a href="#showcase" class="hover:text-gray-200">Vehicles</a>
-                <a href="#contact" class="hover:text-gray-200">Contact</a>
-                <a href="#lifeline" class="hover:text-gray-200">Lifeline</a>
-            </nav>
+
+            <!-- Header Quick Tools -->
+            <div class="flex items-center space-x-3">
+                <button onclick="openQRModal()" class="px-3.5 py-2 bg-neutral-900 hover:bg-neutral-800 text-slate-200 text-xs font-semibold rounded-xl border border-toyota-border transition-all flex items-center space-x-2 active:scale-95">
+                    <i class="fa-solid fa-qrcode text-toyota-red text-sm"></i>
+                    <span class="hidden sm:inline">QR Showroom</span>
+                </button>
+                <a href="#section-vehicles" class="px-4 py-2 bg-toyota-red hover:bg-toyota-darkRed text-white text-xs font-bold rounded-xl transition-all shadow-lg shadow-toyota-red/20 active:scale-95">
+                    Explore Inventory
+                </a>
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-4xl mx-auto px-4 py-6 space-y-10 flex-grow">
+    <main class="max-w-6xl mx-auto px-4 py-8 w-full flex-1 space-y-12">
 
-        <!-- 1. Specialist Profile Section -->
-        <section id="profile" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 text-center md:text-left md:flex md:items-center md:space-x-6">
-            <div class="w-28 h-28 mx-auto md:mx-0 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-4xl font-bold mb-4 md:mb-0 border-2 border-red-500">
-                <i class="fa-solid fa-user-tie"></i>
-            </div>
-            <div class="space-y-2">
-                <h1 id="disp-name" class="text-2xl font-bold text-gray-900">Toyota Marketing Specialist</h1>
-                <p id="disp-title" class="text-red-600 font-medium">Authorized Sales Consultant</p>
-                <p id="disp-bio" class="text-gray-600 text-sm">Your trusted partner for seamless Toyota purchases, financing assistance, and official promos.</p>
-                <div class="pt-2 flex flex-wrap justify-center md:justify-start gap-2 text-xs font-semibold text-gray-500">
-                    <span class="bg-gray-100 px-3 py-1 rounded-full"><i class="fa-solid fa-shield-halved text-red-500 mr-1"></i> Official Dealer</span>
-                    <span class="bg-gray-100 px-3 py-1 rounded-full"><i class="fa-solid fa-bolt text-red-500 mr-1"></i> Fast Approval</span>
+        <section id="section-profile" class="relative rounded-3xl bg-toyota-cardBg border border-toyota-border overflow-hidden shadow-2xl p-6 md:p-10">
+            <div class="absolute top-0 right-0 w-96 h-96 bg-toyota-red/10 rounded-full blur-3xl -z-0 pointer-events-none"></div>
+
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                <!-- Specialist Photo -->
+                <div class="md:col-span-4 flex flex-col items-center text-center">
+                    <div class="relative">
+                        <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden ring-4 ring-toyota-red/40 shadow-2xl bg-neutral-900">
+                            <img id="disp-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&auto=format&fit=crop&q=80" alt="Toyota Specialist" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/171717/ffffff?text=Toyota+Specialist'">
+                        </div>
+                        <span class="absolute bottom-2 right-2 px-3 py-1 bg-emerald-500/90 text-white text-[10px] font-bold rounded-full border border-emerald-400 shadow-md flex items-center space-x-1">
+                            <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
+                            <span>Available Today</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Specialist Content -->
+                <div class="md:col-span-8 space-y-4 text-center md:text-left">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1 bg-toyota-red/10 border border-toyota-red/30 rounded-full text-toyota-red text-xs font-bold uppercase tracking-wider">
+                        <i class="fa-solid fa-award"></i>
+                        <span id="disp-dealership">Toyota Pasig Motors</span>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h1 id="disp-name" class="text-3xl sm:text-4xl font-black text-white tracking-tight">Mark Anthony Santos</h1>
+                        <p id="disp-title" class="text-lg font-semibold text-toyota-red">Senior Marketing Specialist & Finance Advisor</p>
+                    </div>
+
+                    <p id="disp-headline" class="text-sm sm:text-base font-medium text-slate-200">
+                        "Your Toyota Partner — From First Inquiry to First Drive."
+                    </p>
+
+                    <p id="disp-bio" class="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-2xl">
+                        Providing seamless car buying experiences with guaranteed hassle-free auto loan approvals, flexible downpayment promos, and transparent quotations for all Toyota models.
+                    </p>
+
+                    <!-- Contact Bar -->
+                    <div class="pt-3 flex flex-wrap gap-3 justify-center md:justify-start">
+                        <button onclick="handlePhoneAction(event, 'disp-phone')" class="px-4 py-2.5 bg-toyota-red hover:bg-toyota-darkRed text-white text-xs font-bold rounded-xl transition-all shadow-lg shadow-toyota-red/20 flex items-center space-x-2 active:scale-95">
+                            <i class="fa-solid fa-phone"></i>
+                            <span id="disp-phone-label">Call Specialist</span>
+                        </button>
+
+                        <button onclick="downloadVCard()" class="px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 text-slate-200 text-xs font-bold rounded-xl border border-toyota-border transition-all flex items-center space-x-2 active:scale-95">
+                            <i class="fa-solid fa-address-card text-toyota-red"></i>
+                            <span>Save Contact Card</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2. Vehicle Showcase & Financing Estimator -->
-        <section id="showcase" class="space-y-4">
-            <h2 class="text-xl font-bold text-gray-900 border-l-4 border-red-600 pl-3">Vehicle Showcase & Calculator</h2>
-            <div id="vehicle-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Vehicle Cards Injected via JS -->
+        <section id="section-vehicles" class="space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-2 border-b border-toyota-border pb-4">
+                <div>
+                    <span class="text-xs font-bold text-toyota-red tracking-widest uppercase">Official Inventory</span>
+                    <h2 class="text-2xl font-black text-white tracking-tight">Vehicle Showcase & Promos</h2>
+                </div>
+                <p class="text-xs text-slate-400">All prices & promos updated daily with accurate dealer promos.</p>
+            </div>
+
+            <!-- Vehicle Cards Grid Container -->
+            <div id="vehicleGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rendered dynamically by Javascript -->
             </div>
         </section>
 
-        <!-- 3. Quick Contact Hub -->
-        <section id="contact" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
-            <h2 class="text-xl font-bold text-gray-900 border-l-4 border-red-600 pl-3">Quick Contact Hub</h2>
-            <p class="text-xs text-gray-500">Connect with me directly or submit an application online.</p>
+        <section id="section-contacts" class="space-y-6">
+            <div class="border-b border-toyota-border pb-4">
+                <span class="text-xs font-bold text-toyota-red tracking-widest uppercase">Instant Connect</span>
+                <h2 class="text-2xl font-black text-white tracking-tight">Quick Specialist Contacts</h2>
+            </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <!-- Google Doc Application Link -->
-                <a id="btn-app-form" href="#" target="_blank" class="flex items-center justify-between p-3 bg-red-50 hover:bg-red-100 text-red-700 rounded-xl font-medium transition border border-red-200">
-                    <span class="flex items-center space-x-3">
-                        <i class="fa-solid fa-file-signature text-xl"></i>
-                        <span>Online Application Form</span>
-                    </span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-sm opacity-70"></i>
-                </a>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Application Form Direct Link Button -->
+                <button onclick="handleAppFormClick(event)" class="p-5 rounded-2xl bg-toyota-cardBg border border-toyota-border hover:border-toyota-red/50 transition-all flex flex-col items-center text-center space-y-3 group active:scale-95">
+                    <div class="w-12 h-12 rounded-2xl bg-toyota-red/10 border border-toyota-red/30 flex items-center justify-center text-toyota-red text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-file-signature"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm">Application Form</h3>
+                        <p class="text-xs text-slate-400 mt-1">Google Doc Auto Loan Form</p>
+                    </div>
+                </button>
 
-                <!-- WhatsApp -->
-                <a id="btn-whatsapp" href="#" target="_blank" class="flex items-center justify-between p-3 bg-green-50 hover:bg-green-100 text-green-700 rounded-xl font-medium transition border border-green-200">
-                    <span class="flex items-center space-x-3">
-                        <i class="fa-brands fa-whatsapp text-xl"></i>
-                        <span>WhatsApp Chat</span>
-                    </span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-sm opacity-70"></i>
-                </a>
+                <!-- Facebook Page Button -->
+                <button onclick="handleSocialClick(event, 'disp-fb')" class="p-5 rounded-2xl bg-toyota-cardBg border border-toyota-border hover:border-blue-500/50 transition-all flex flex-col items-center text-center space-y-3 group active:scale-95">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-600/10 border border-blue-500/30 flex items-center justify-center text-blue-500 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-facebook"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm">Facebook Page</h3>
+                        <p class="text-xs text-slate-400 mt-1">Promos & Customer Reviews</p>
+                    </div>
+                </button>
 
-                <!-- Facebook -->
-                <a id="btn-facebook" href="#" target="_blank" class="flex items-center justify-between p-3 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-xl font-medium transition border border-blue-200">
-                    <span class="flex items-center space-x-3">
-                        <i class="fa-brands fa-facebook text-xl"></i>
-                        <span>Facebook Page</span>
-                    </span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-sm opacity-70"></i>
-                </a>
+                <!-- Instagram Button -->
+                <button onclick="handleSocialClick(event, 'disp-ig')" class="p-5 rounded-2xl bg-toyota-cardBg border border-toyota-border hover:border-pink-500/50 transition-all flex flex-col items-center text-center space-y-3 group active:scale-95">
+                    <div class="w-12 h-12 rounded-2xl bg-pink-600/10 border border-pink-500/30 flex items-center justify-center text-pink-500 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm">Instagram</h3>
+                        <p class="text-xs text-slate-400 mt-1">Vehicle Turnover Photos</p>
+                    </div>
+                </button>
 
-                <!-- Instagram -->
-                <a id="btn-instagram" href="#" target="_blank" class="flex items-center justify-between p-3 bg-pink-50 hover:bg-pink-100 text-pink-700 rounded-xl font-medium transition border border-pink-200">
-                    <span class="flex items-center space-x-3">
-                        <i class="fa-brands fa-instagram text-xl"></i>
-                        <span>Instagram Profile</span>
-                    </span>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-sm opacity-70"></i>
-                </a>
+                <!-- WhatsApp Button -->
+                <button onclick="handleSocialClick(event, 'disp-wa')" class="p-5 rounded-2xl bg-toyota-cardBg border border-toyota-border hover:border-emerald-500/50 transition-all flex flex-col items-center text-center space-y-3 group active:scale-95">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-600/10 border border-emerald-500/30 flex items-center justify-center text-emerald-500 text-xl group-hover:scale-110 transition-transform">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm">WhatsApp</h3>
+                        <p class="text-xs text-slate-400 mt-1">Direct Instant Messaging</p>
+                    </div>
+                </button>
             </div>
         </section>
 
-        <!-- 4. Driver's Lifeline / Emergency Hotlines -->
-        <section id="lifeline" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 space-y-4">
-            <h2 class="text-xl font-bold text-gray-900 border-l-4 border-red-600 pl-3">Driver's Lifeline</h2>
-            <p class="text-xs text-gray-500">Emergency support numbers and customer care hotlines.</p>
-            <div id="hotline-list" class="space-y-2">
-                <!-- Hotlines injected via JS -->
+        <section id="section-hotlines" class="space-y-6">
+            <div class="border-b border-toyota-border pb-4">
+                <span class="text-xs font-bold text-toyota-red tracking-widest uppercase">Driver's Lifeline</span>
+                <h2 class="text-2xl font-black text-white tracking-tight">Roadside Emergency Hotlines</h2>
+            </div>
+
+            <!-- Hotlines Container -->
+            <div id="hotlinesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Rendered dynamically by Javascript -->
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-900 text-gray-400 py-6 text-center text-xs">
-        <p>© <span id="year"></span> Toyota Marketing Specialist. All Rights Reserved.</p>
+    <footer class="border-t border-toyota-border bg-toyota-cardBg/50 py-8 text-center text-xs text-slate-500">
+        <div class="max-w-6xl mx-auto px-4 space-y-2">
+            <p>© <span id="footerYear">2026</span> Toyota Authorized Marketing Specialist Web App. All rights reserved.</p>
+            <p>Toyota logos and trademarks belong to Toyota Motor Corporation.</p>
+        </div>
     </footer>
 
-    <!-- Secret Admin Panel Modal -->
-    <div id="admin-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl p-6 space-y-6 max-h-[90vh] overflow-y-auto">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="text-lg font-bold text-gray-900"><i class="fa-solid fa-user-gear text-red-600 mr-2"></i> Owner Admin Panel</h3>
-                <button id="close-admin" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
+    
+    <!-- SECRET PIN ACCESS MODAL -->
+    <div id="pinModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-toyota-cardBg border border-toyota-border rounded-3xl p-6 max-w-xs w-full text-center space-y-4 shadow-2xl relative">
+            <button onclick="closeModal('pinModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="w-12 h-12 rounded-2xl bg-toyota-red/10 border border-toyota-red/30 flex items-center justify-center text-toyota-red text-xl mx-auto">
+                <i class="fa-solid fa-lock"></i>
             </div>
-
-            <!-- Admin Form -->
-            <form id="admin-form" class="space-y-6 text-xs">
-                <!-- Profile Settings -->
-                <div class="space-y-2 border-b pb-4">
-                    <h4 class="font-bold text-gray-800 text-sm">1. Profile Settings</h4>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <div>
-                            <label class="block font-semibold text-gray-600 mb-1">Full Name:</label>
-                            <input type="text" id="edit-name" placeholder="Name" class="w-full p-2 border rounded">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-gray-600 mb-1">Job Title:</label>
-                            <input type="text" id="edit-title" placeholder="Title" class="w-full p-2 border rounded">
-                        </div>
-                    </div>
-                    <label class="block font-semibold text-gray-600 mb-1 mt-2">Bio Description:</label>
-                    <textarea id="edit-bio" placeholder="Bio" class="w-full p-2 border rounded" rows="2"></textarea>
-                </div>
-
-                <!-- Links & Social Media -->
-                <div class="space-y-2 border-b pb-4">
-                    <h4 class="font-bold text-gray-800 text-sm">2. Application Form & Contact Links</h4>
-                    <div class="space-y-3">
-                        <div class="bg-red-50 p-3 rounded-xl border border-red-200">
-                            <label class="block font-bold text-red-700 mb-1">Google Docs Application Form URL:</label>
-                            <input type="url" id="edit-app-link" placeholder="https://docs.google.com/document/d/..." class="w-full p-2 border border-red-300 rounded font-mono bg-white text-gray-800">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-gray-600 mb-1">WhatsApp Link:</label>
-                            <input type="url" id="edit-wa-link" placeholder="https://wa.me/..." class="w-full p-2 border rounded font-mono">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-gray-600 mb-1">Facebook Page Link:</label>
-                            <input type="url" id="edit-fb-link" placeholder="https://facebook.com/..." class="w-full p-2 border rounded font-mono">
-                        </div>
-                        <div>
-                            <label class="block font-semibold text-gray-600 mb-1">Instagram Profile Link:</label>
-                            <input type="url" id="edit-ig-link" placeholder="https://instagram.com/..." class="w-full p-2 border rounded font-mono">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Vehicle Inventory Management -->
-                <div class="space-y-3 border-b pb-4">
-                    <div class="flex justify-between items-center">
-                        <h4 class="font-bold text-gray-800 text-sm">3. Vehicle Inventory</h4>
-                        <button type="button" id="add-vehicle-btn" class="bg-green-600 text-white px-3 py-1 rounded-lg font-bold text-xs hover:bg-green-700 transition">
-                            <i class="fa-solid fa-plus mr-1"></i> Add Vehicle
-                        </button>
-                    </div>
-                    <div id="admin-vehicle-list" class="space-y-2 max-h-48 overflow-y-auto p-1 bg-gray-50 rounded-xl border border-gray-200">
-                        <!-- Vehicle Editable Rows Injected JS -->
-                    </div>
-                </div>
-
-                <!-- Hotlines -->
-                <div class="space-y-2 border-b pb-4">
-                    <h4 class="font-bold text-gray-800 text-sm">4. Driver's Lifeline Hotlines</h4>
-                    <p class="text-[10px] text-gray-500">Format: Name:Phone (separated by commas)</p>
-                    <input type="text" id="edit-hotlines" placeholder="Sales Inquiry: 09171234567, Emergency: 09181234567" class="w-full p-2 border rounded font-mono">
-                </div>
-
-                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-sm transition shadow-md">
-                    Save Edits to Live Website
-                </button>
-            </form>
+            <div>
+                <h3 class="text-lg font-bold text-white">Owner Security Access</h3>
+                <p class="text-xs text-slate-400 mt-1">Enter PIN to unlock Admin Drawer</p>
+            </div>
+            <input type="password" id="pinInput" placeholder="Enter PIN (Default: 1234)" maxlength="8" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-4 py-3 text-center text-lg font-bold text-white focus:outline-none focus:border-toyota-red">
+            <button onclick="verifyPin()" class="w-full py-3 bg-toyota-red hover:bg-toyota-darkRed text-white font-bold text-xs rounded-xl transition-all shadow-lg shadow-toyota-red/20">
+                Unlock Dashboard
+            </button>
         </div>
     </div>
 
-    <!-- Application Logic -->
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
+    <!-- SECRET ADMIN DRAWER -->
+    <div id="adminDrawer" class="fixed inset-y-0 right-0 w-full max-w-xl bg-toyota-black border-l border-toyota-border shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+        <div class="p-5 border-b border-toyota-border flex items-center justify-between bg-toyota-cardBg">
+            <div class="flex items-center space-x-3">
+                <i class="fa-solid fa-sliders text-toyota-red text-lg"></i>
+                <div>
+                    <h2 class="font-bold text-white text-base">Owner Admin Panel</h2>
+                    <p class="text-xs text-slate-400">Edit every text, price, hotline & photo</p>
+                </div>
+            </div>
+            <button onclick="closeModal('adminDrawer')" class="p-2 text-slate-400 hover:text-white rounded-lg">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+        </div>
 
-        // Default Master Data
-        const defaultData = {
-            name: "Toyota Marketing Specialist",
-            title: "Authorized Sales Consultant",
-            bio: "Your trusted partner for seamless Toyota purchases, financing assistance, and official promos.",
-            appFormUrl: "https://docs.google.com",
-            whatsappUrl: "https://wa.me/",
-            facebookUrl: "https://facebook.com",
-            instagramUrl: "
+        <!-- Admin Form Fields -->
+        <div class="flex-1 overflow-y-auto p-6 space-y-8">
+            
+            <!-- Code Export Tool -->
+            <div class="bg-toyota-red/10 border border-toyota-red/30 p-4 rounded-2xl space-y-2">
+                <div class="flex justify-between items-center">
+                    <span class="text-xs font-bold text-toyota-red uppercase">GitHub / AI Export Tool</span>
+                    <button onclick="exportFullCode()" class="px-3 py-1.5 bg-toyota-red text-white text-xs font-bold rounded-lg hover:bg-toyota-darkRed">
+                        <i class="fa-solid fa-copy mr-1"></i> Copy Code
+                    </button>
+                </div>
+                <p class="text-xs text-slate-300">Click to copy the complete HTML codebase to paste into GitHub Pages or share with AI for redesigns.</p>
+            </div>
+
+            <!-- Specialist Info Form -->
+            <div class="space-y-4">
+                <h3 class="text-xs font-bold text-toyota-red uppercase tracking-wider border-b border-toyota-border pb-2">01. Specialist Profile</h3>
+                
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Profile Photo URL</label>
+                    <input type="text" id="edit-photo" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-3 py-2 text-xs text-white">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-xs text-slate-400 block mb-1">Full Name</label>
+                        <input type="text" id="edit-name" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-400 block mb-1">Job Title</label>
+                        <input type="text" id="edit-title" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="text-xs text-slate-400 block mb-1">Dealership Name</label>
+                        <input type="text" id="edit-dealership" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="text-xs text-slate-400 block mb-1">Phone Number</label>
+                        <input type="text" id="edit-phone" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-3 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Headline Tagline</label>
+                    <input type="text" id="edit-headline" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-3 py-2 text-xs text-white">
+                </div>
+
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Short Biography</label>
+                    <textarea id="edit-bio" rows="2" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-3 py-2 text-xs text-white resize-none"></textarea>
+                </div>
+            </div>
+
+            <!-- Vehicles Editor -->
+            <div class="space-y-4">
+                <div class="flex justify-between items-center border-b border-toyota-border pb-2">
+                    <h3 class="text-xs font-bold text-toyota-red uppercase tracking-wider">02. Vehicles Showcase</h3>
+                    <button onclick="addVehicleItem()" class="text-xs text-toyota-red font-bold hover:underline">
+                        <i class="fa-solid fa-plus mr-1"></i> Add Vehicle
+                    </button>
+                </div>
+                <div id="adminVehiclesList" class="space-y-4"></div>
+            </div>
+
+            <!-- Social Links & Application Form Editor -->
+            <div class="space-y-4">
+                <h3 class="text-xs font-bold text-toyota-red uppercase tracking-wider border-b border-toyota-border pb-2">03. Social Contacts & Application Form</h3>
+                
+                <div>
+                    <label class="text-xs text-toyota-red font-bold block mb-1">Google Docs Application Form URL</label>
+                    <input type="text" id="edit-app" placeholder="https://docs.google.com/document/d/..." class="w-full bg-neutral-900 border border-toyota-red/50 rounded-xl px-3 py-2 text-xs text-white font-mono">
+                </div>
+
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Facebook Page URL</label>
+                    <input type="text" id="edit-fb" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-3 py-2 text-xs text-white">
+                </div>
+
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">Instagram Profile URL</label>
+                    <input type="text" id="edit-ig" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-3 py-2 text-xs text-white">
+                </div>
+
+                <div>
+                    <label class="text-xs text-slate-400 block mb-1">WhatsApp Phone Link</label>
+                    <input type="text" id="edit-wa" class="w-full bg-neutral-900 border border-toyota-border rounded-xl px-3 py-2 text-xs text-white">
+                </div>
+            </div>
+
+            <!-- Emergency Hotlines Editor -->
+            <div class="space-y-4">
+                <div class="flex justify-between items-center border-b border-toyota-border pb-2">
+                    <h3 class="text-xs font-bold text-toyota-red uppercase tracking-wider">04. Driver's Hotlines</h3>
+                    <button onclick="addHotlineItem()" class="text-xs text-toyota-red font-bold hover:underline">
+                        <i class="fa-solid fa-plus mr-1"></i> Add Hotline
+                    </button>
+                </div>
+                <div id="adminHotlinesList" class="space-y-4"></div>
+            </div>
+
+        </div>
+
+        <div class="p-5 border-t border-toyota-border bg-toyota-cardBg flex justify-end">
+            <button onclick="saveAdminEdits()" class="w-full py-3 bg-toyota-red hover:bg-toyota-darkRed text-white font-bold text-sm rounded-xl transition-all shadow-lg shadow-toyota-red/20">
+                Save Edits to Live Website
+            </button>
+        </div>
+    </div>
+
+    <!-- QR MODAL -->
+    <div id="qrModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-toyota-cardBg border border-toyota-border rounded-3xl p-6 max-w-xs w-full text-center space-y-5 shadow-2xl relative">
+            <button onclick="closeModal('qrModal')" class="absolute top-4 right-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div>
+                <h3 class="text-lg font-bold text-white">Digital Showroom QR</h3>
+                <p class="text-xs text-slate-400 mt-1">Scan with any smartphone camera</p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl inline-block shadow-inner mx-auto">
+                <div id="qrcodeCanvas"></div>
+            </div>
+            <button onclick="copyPageLink()" class="w-full py-2.5 bg-neutral-900 hover:bg-neutral-800 text-slate-200 text-xs font-bold rounded-xl border border-toyota-border transition-all">
+                Copy Link to Share
+            </button>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-neutral-900 text-white border border-toyota-border px-5 py-3 rounded-2xl shadow-2xl flex items-center space-x-3 opacity-0 pointer-events-none transition-all duration-300 z-50 text-xs font-semibold">
+        <i class="fa-solid fa-circle-check text-toyota-red text-base"></i>
+        <span id="toastMsg">Action completed successfully!</span>
+    </div>
+
+    <script>
+        // Secret PIN Access Logic
+        let logoClickCount = 0;
+        let logoClickTimer = null;
+        const SECRET_PIN = "1234";
+
+        // Default Initial Data
+        let appData = {
+            profile: {
+                photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&auto=format&fit=crop&q=80",
+                name: "Mark Anthony Santos",
+                title: "Senior Marketing Specialist & Finance Advisor",
+                dealership: "Toyota Pasig Motors",
+                phone: "+63 917 888 9012",
+                headline: '"Your Toyota Partner — From First Inquiry to First Drive."',
+                bio: "Providing seamless car buying experiences with guaranteed hassle-free auto loan approvals, flexible downpayment promos, and transparent quotations for all Toyota models."
+            },
+            socials: {
+                appForm: "https://docs.google.com",
+                fb: "https://facebook.com",
+                ig: "https://instagram.com",
+                wa: "https://wa.me/639178889012"
+            },
+            vehicles: [
+                {
+                    id: 1,
+                    name: "Toyota Vios 1.3 XLE CVT",
+                    badge: "Best Seller",
+                    image: "https://images.unsplash.com/photo-1590362891991-f776e747a588?w=600&auto=format&fit=crop&q=80",
+                    price: "₱902,000",
+                    monthly: "₱14,800/mo",
+                    promo: "₱28,000 Low Downpayment Deal",
+                    details: "Includes 1-Year Comprehensive Insurance, 3-Years LTO Registration & Tint."
+                },
+                {
+                    id: 2,
+                    name: "Toyota Fortuner 2.4 G Diesel",
+                    badge: "SUV Leader",
+                    image: "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=600&auto=format&fit=crop&q=80",
+                    price: "₱1,769,000",
+                    monthly: "₱28,500/mo",
+                    promo: "₱65,000 All-In Downpayment",
+                    details: "Free Platinum Tint, Floor Mats, Complete Emergency Kit & Periodic Maintenance."
+                },
+                {
+                    id: 3,
+                    name: "Toyota Hilux Conquest 2.8 4x4",
+                    badge: "Tough Pickup",
+                    image: "https://images.unsplash.com/photo-1559416523-140ddc3d238c?w=600&auto=format&fit=crop&q=80",
+                    price: "₱2,078,000",
+                    monthly: "₱32,400/mo",
+                    promo: "Zero Interest 24-Month Option",
+                    details: "Includes Heavy Duty Bedliner, Conquest Decals & Ceramic Coating Voucher."
+                }
+            ],
+            hotlines: [
+                {
+                    id: 1,
+                    name: "Toyota Assistance",
+                    number: "02-8819-2912",
+                    badge: "24/7 Roadside",
+                    sub: "Official Toyota Care"
+                },
+                {
+                    id: 2,
+                    name: "National Emergency",
+                    number: "911",
+                    badge: "Immediate Response",
+                    sub: "Police & Rescue"
+                },
+                {
+                    id: 3,
+                    name: "MMDA Hotline",
+                    number: "136",
+                    badge: "Traffic & Towing",
+                    sub: "Metro Manila Rescue"
+                },
+                {
+                    id: 4,
+                    name: "Red Cross Emergency",
+                    number: "143",
+                    badge: "Ambulance",
+                    sub: "Medical Services"
+                }
+            ]
+        };
+
+        // Window Load Initialization
+        window.onload = function() {
+            loadStoredData();
+            renderAllSections();
+            setupSecretTrigger();
+        };
+
+        // Load data from LocalStorage
+        function loadStoredData() {
+            const saved = localStorage.getItem('toyota_app_data');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    appData = { ...appData, ...parsed };
+                    if (!appData.socials) appData.socials = {};
+                    if (!appData.socials.appForm) appData.socials.appForm = "https://docs.google.com";
+                } catch(e) {
+                    console.error("Could not parse saved data", e);
+                }
+            }
+        }
+
+        // Save data to LocalStorage
+        function saveData() {
+            localStorage.setItem('toyota_app_data', JSON.stringify(appData));
+            renderAllSections();
+        }
+
+        // Secret Triple Tap Trigger on Top-Left Logo
+        function setupSecretTrigger() {
+            const logo = document.getElementById('secretLogoTrigger');
+            logo.addEventListener('click', function(e) {
+                e.preventDefault();
+                logoClickCount++;
+                clearTimeout(logoClickTimer);
+
+                if (logoClickCount === 3) {
+                    logoClickCount = 0;
+                    openModal('pinModal');
+                } else {
+                    logoClickTimer = setTimeout(() => {
+                        logoClickCount = 0;
+                    }, 800);
+                }
+            });
+        }
+
+        function verifyPin() {
+            const input = document.getElementById('pinInput').value;
+            if (input === SECRET_PIN) {
+                closeModal('pinModal');
+                document.getElementById('pinInput').value = '';
+                openAdminDrawer();
+            } else {
+                showToast("Incorrect PIN. Please try again.");
+            }
+        }
+
+        // Render UI Sections
+        function renderAllSections() {
+            // Section 01
+            document.getElementById('disp-photo').src = appData.profile.photo;
+            document.getElementById('disp-name').innerText = appData.profile.name;
+            document.getElementById('disp-title').innerText = appData.profile.title;
+            document.getElementById('disp-dealership').innerText = appData.profile.dealership;
+            document.getElementById('disp-headline').innerText = appData.profile.headline;
+            document.getElementById('disp-bio').innerText = appData.profile.bio;
+            document.getElementById('disp-phone-label').innerText = `Call (${appData.profile.phone})`;
+
+            // Section 02 - Vehicles Grid
+            const vGrid = document.getElementById('vehicleGrid');
+            vGrid.innerHTML = '';
+            appData.vehicles.forEach(v => {
+                const card = document.createElement('div');
+                card.className = "rounded-3xl bg-toyota-cardBg border border-toyota-border overflow-hidden hover:border-toyota-red/40 transition-all flex flex-col justify-between p-5 space-y-4 shadow-xl";
+                card.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="relative h-44 rounded-2xl overflow-hidden bg-neutral-900">
+                            <img src="${v.image}" alt="${v.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/600x400/171717/ffffff?text=Toyota+Vehicle'">
+                            <span class="absolute top-3 right-3 px-3 py-1 bg-toyota-red/90 backdrop-blur-md text-white text-[10px] font-black uppercase rounded-full tracking-wider shadow-lg">
+                                ${v.badge}
+                            </span>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-black text-white leading-snug">${v.name}</h3>
+                            <div class="flex justify-between items-baseline mt-1">
+                                <span class="text-xs text-slate-400">Starting MSRP:</span>
+                                <span class="text-sm font-bold text-slate-200">${v.price}</span>
+                            </div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-neutral-900/90 border border-toyota-border space-y-1">
+                            <div class="text-xs font-bold text-toyota-red flex items-center space-x-1">
+                                <i class="fa-solid fa-tag"></i>
+                                <span>${v.promo}</span>
+                            </div>
+                            <p class="text-[11px] text-slate-400 leading-tight">${v.details}</p>
+                        </div>
+                    </div>
+                    <button onclick="handleAppFormClick(event)" class="w-full py-2.5 bg-toyota-red hover:bg-toyota-darkRed text-white text-xs font-bold rounded-xl transition-all shadow-md active:scale-95">
+                        Inquire & Request Quote
+                    </button>
+                `;
+                vGrid.appendChild(card);
+            });
+
+            // Section 04 - Hotlines Grid
+            const hGrid = document.getElementById('hotlinesGrid');
+            hGrid.innerHTML = '';
+            appData.hotlines.forEach(h => {
+                const card = document.createElement('div');
+                card.className = "p-4 rounded-2xl bg-toyota-cardBg border border-toyota-border hover:border-toyota-red/50 transition-all flex flex-col justify-between space-y-3";
+                card.innerHTML = `
+                    <div>
+                        <span class="text-[10px] font-bold text-toyota-red uppercase tracking-wider">${h.badge}</span>
+                        <h4 class="font-bold text-white text-sm">${h.name}</h4>
+                        <p class="text-xs text-slate-400">${h.sub}</p>
+                    </div>
+                    <button onclick="handlePhoneAction(event, '', '${h.number}')" class="w-full py-2 bg-neutral-900 hover:bg-neutral-800 text-slate-200 text-xs font-bold rounded-xl border border-toyota-border flex items-center justify-center space-x-2 active:scale-95">
+                        <i class="fa-solid fa-phone text-toyota-red"></i>
+                        <span>${h.number}</span>
+                    </button>
+                `;
+                hGrid.appendChild(card);
+            });
+        }
+
+        // Open Admin Drawer and Populate Controls
+        function openAdminDrawer() {
+            document.getElementById('edit-photo').value = appData.profile.photo;
+            document.getElementById('edit-name').value = appData.profile.name;
+            document.getElementById('edit-title').value = appData.profile.title;
+            document.getElementById('edit-dealership').value = appData.profile.dealership;
+            document.getElementById('edit-phone').value = appData.profile.phone;
+            document.getElementById('edit-headline').value = appData.profile.headline;
+            document.getElementById('edit-bio').value = appData.profile.bio;
+
+            document.getElementById('edit-app').value = appData.socials?.appForm || "https://docs.google.com";
+            document.getElementById('edit-fb').value = appData.socials.fb;
+            document.getElementById('edit-ig').value = appData.socials.ig;
+            document.getElementById('edit-wa').value = appData.socials.wa;
+
+            renderAdminVehiclesList();
+            renderAdminHotlinesList();
+
+            openModal('adminDrawer');
+        }
+
+        function renderAdminVehiclesList() {
+            const list = document.getElementById('adminVehiclesList');
+            list.innerHTML = '';
+            appData.vehicles.forEach((v, idx) => {
+                const item = document.createElement('div');
+                item.className = "p-3 rounded-xl bg-neutral-900 border border-toyota-border space-y-2";
+                item.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-toyota-red">Vehicle #${idx + 1}</span>
+                        <button onclick="removeVehicleItem(${idx})" class="text-xs text-rose-400 hover:underline">Delete</button>
+                    </div>
+                    <input type="text" value="${v.name}" onchange="appData.vehicles[${idx}].name=this.value" placeholder="Vehicle Name" class="w-full bg-toyota-black border border-toyota-border rounded-lg px-2 py-1 text-xs text-white">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" value="${v.price}" onchange="appData.vehicles[${idx}].price=this.value" placeholder="MSRP Price" class="bg-toyota-black border border-toyota-border rounded-lg px-2 py-1 text-xs text-white">
+                        <input type="text" value="${v.badge}" onchange="appData.vehicles[${idx}].badge=this.value" placeholder="Badge Tag" class="bg-toyota-black border border-toyota-border rounded-lg px-2 py-1 text-xs text-white">
+                    </div>
+                    <input type="text" value="${v.promo}" onchange="appData.vehicles[${idx}].promo=this.value" placeholder="Promo Title" class="w-full bg-toyota-black border border-toyota-border rounded-lg px-2 py-1 text-xs text-white">
+                    <input type="text" value="${v.details}" onchange="appData.vehicles[${idx}].details=this.value" placeholder="Promo Details" class="w-full bg-toyota-black border border-toyota-border rounded-lg px-2 py-1 text-xs text-white">
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function addVehicleItem() {
+            appData.vehicles.push({
+                id: Date.now(),
+                name: "New Toyota Model",
+                badge: "New Arrival",
+                image: "https://images.unsplash.com/photo-1590362891991-f776e747a588?w=600&auto=format&fit=crop&q=80",
+                price: "₱1,000,000",
+                monthly: "₱15,000/mo",
+                promo: "Low Downpayment Promo",
+                details: "Includes 1 Year Free Insurance & LTO Registration."
+            });
+            renderAdminVehiclesList();
+        }
+
+        function removeVehicleItem(idx) {
+            appData.vehicles.splice(idx, 1);
+            renderAdminVehiclesList();
+        }
+
+        function renderAdminHotlinesList() {
+            const list = document.getElementById('adminHotlinesList');
+            list.innerHTML = '';
+            appData.hotlines.forEach((h, idx) => {
+                const item = document.createElement('div');
+                item.className = "p-3 rounded-xl bg-neutral-900 border border-toyota-border space-y-2";
+                item.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <span class="text-xs font-bold text-toyota-red">Hotline #${idx + 1}</span>
+                        <button onclick="removeHotlineItem(${idx})" class="text-xs text-rose-400 hover:underline">Delete</button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="text" value="${h.name}" onchange="appData.hotlines[${idx}].name=this.value" placeholder="Hotline Name" class="bg-toyota-black border border-toyota-border rounded-lg px-2 py-1 text-xs text-white">
+                        <input type="text" value="${h.number}" onchange="appData.hotlines[${idx}].number=this.value" placeholder="Phone Number" class="bg-toyota-black border border-toyota-border rounded-lg px-2 py-1 text-xs text-white">
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function addHotlineItem() {
+            appData.hotlines.push({
+                id: Date.now(),
+                name: "Emergency Contact",
+                number: "0917-000-0000",
+                badge: "24/7 Service",
+                sub: "Local Assistance"
+            });
+            renderAdminHotlinesList();
+        }
+
+        function removeHotlineItem(idx) {
+            appData.hotlines.splice(idx, 1);
+            renderAdminHotlinesList();
+        }
+
+        function saveAdminEdits() {
+            appData.profile.photo = document.getElementById('edit-photo').value;
+            appData.profile.name = document.getElementById('edit-name').value;
+            appData.profile.title = document.getElementById('edit-title').value;
+            appData.profile.dealership = document.getElementById('edit-dealership').value;
+            appData.profile.phone = document.getElementById('edit-phone').value;
+            appData.profile.headline = document.getElementById('edit-headline').value;
+            appData.profile.bio = document.getElementById('edit-bio').value;
+
+            if (!appData.socials) appData.socials = {};
+            appData.socials.appForm = document.getElementById('edit-app').value;
+            appData.socials.fb = document.getElementById('edit-fb').value;
+            appData.socials.ig = document.getElementById('edit-ig').value;
+            appData.socials.wa = document.getElementById('edit-wa').value;
+
+            saveData();
+            closeModal('adminDrawer');
+            showToast("All changes saved to live website!");
+        }
+
+        // Guaranteed Non-reloading Handlers
+        function copyToClipboardFallback(text) {
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    navigator.clipboard.writeText(text).catch(() => {
+                        useExecCommandCopy(text);
+                    });
+                } else {
+                    useExecCommandCopy(text);
+                }
+            } catch (err) {
+                useExecCommandCopy(text);
+            }
+        }
+
+        function useExecCommandCopy(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.opacity = "0";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            try {
+                document.execCommand('copy');
+            } catch (err) {
+                console.error('Fallback copy failed', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function handlePhoneAction(e, elementId = '', directNum = '') {
+            if (e) e.preventDefault();
+            const num = directNum || appData.profile.phone;
+            
+            copyToClipboardFallback(num);
+            showToast(`Phone number copied: ${num}`);
+        }
+
+        function handleAppFormClick(e) {
+            if (e) e.preventDefault();
+            const url = appData.socials?.appForm || "https://docs.google.com";
+            if (url && url !== '#') {
+                window.open(url, '_blank');
+            } else {
+                showToast("Application Form link not set yet. Edit in Admin drawer.");
+            }
+        }
+
+        function handleSocialClick(e, type) {
+            if (e) e.preventDefault();
+            const url = appData.socials[type.replace('disp-', '')] || '#';
+            if (url && url !== '#') {
+                window.open(url, '_blank');
+            } else {
+                showToast("Social link not set yet. Edit in Admin drawer.");
+            }
+        }
+
+        // Generate vCard Download
+        function downloadVCard() {
+            const vCardContent = [
+                'BEGIN:VCARD',
+                'VERSION:3.0',
+                `FN:${appData.profile.name}`,
+                `TITLE:${appData.profile.title}`,
+                `ORG:${appData.profile.dealership}`,
+                `TEL;TYPE=CELL:${appData.profile.phone}`,
+                `NOTE:${appData.profile.headline}`,
+                'END:VCARD'
+            ].join('\n');
+
+            const blob = new Blob([vCardContent], { type: 'text/vcard;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${appData.profile.name.replace(/\s+/g, '_')}_Toyota.vcf`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("vCard downloaded!");
+        }
+
+        // Modal Helpers
+        function openModal(id) {
+            const el = document.getElementById(id);
+            if (id === 'adminDrawer') {
+                el.classList.remove('translate-x-full');
+            } else {
+                el.classList.remove('opacity-0', 'pointer-events-none');
+            }
+            if (id === 'qrModal') generateQR();
+        }
+
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            if (id === 'adminDrawer') {
+                el.classList.add('translate-x-full');
+            } else {
+                el.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function generateQR() {
+            const canvas = document.getElementById('qrcodeCanvas');
+            canvas.innerHTML = '';
+            new QRCode(canvas, {
+                text: window.location.href,
+                width: 160,
+                height: 160,
+                colorDark: "#0d0d0d",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function copyPageLink() {
+            copyToClipboardFallback(window.location.href);
+            showToast("Website link copied!");
+            closeModal('qrModal');
+        }
+
+        function exportFullCode() {
+            const code = document.documentElement.outerHTML;
+            copyToClipboardFallback(code);
+            showToast("Full website HTML code copied to clipboard!");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
