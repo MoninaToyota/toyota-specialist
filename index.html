@@ -55,15 +55,6 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
-        .badge-pulse {
-            animation: pulse-red 2s infinite;
-        }
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(235, 10, 30, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(235, 10, 30, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(235, 10, 30, 0); }
-        }
     </style>
 </head>
 <body class="bg-toyota-black text-slate-100 min-h-screen font-sans flex flex-col justify-between selection:bg-toyota-red selection:text-white">
@@ -260,7 +251,7 @@
         </div>
     </div>
 
-    <!-- SECRET ADMIN DRAWER (CLOSED BY DEFAULT) -->
+    <!-- SECRET ADMIN DRAWER (PERMANENTLY LOCKED & HIDDEN BY DEFAULT) -->
     <div id="adminDrawer" class="fixed inset-y-0 right-0 w-full max-w-xl bg-toyota-black border-l border-toyota-border shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
         <div class="p-5 border-b border-toyota-border flex items-center justify-between bg-toyota-cardBg">
             <div class="flex items-center space-x-3">
@@ -414,7 +405,6 @@
 
     <!-- PRIMARY APP DATA INJECTION POINT -->
     <script id="appDataScript">
-        // Master hardcoded data structure
         let appData = {
             profile: {
                 photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80",
@@ -497,19 +487,16 @@
     </script>
 
     <script>
-        // Secret PIN Access Logic
         let logoClickCount = 0;
         let logoClickTimer = null;
         const SECRET_PIN = "1234";
 
-        // Window Load Initialization
         window.onload = function() {
             loadStoredData();
             renderAllSections();
             setupSecretTrigger();
         };
 
-        // Load data from LocalStorage
         function loadStoredData() {
             const saved = localStorage.getItem('toyota_app_data');
             if (saved) {
@@ -524,13 +511,11 @@
             }
         }
 
-        // Save data to LocalStorage
         function saveData() {
             localStorage.setItem('toyota_app_data', JSON.stringify(appData));
             renderAllSections();
         }
 
-        // Secret Triple Tap Trigger on Top-Left Logo
         function setupSecretTrigger() {
             const logo = document.getElementById('secretLogoTrigger');
             logo.addEventListener('click', function(e) {
@@ -560,9 +545,7 @@
             }
         }
 
-        // Render UI Sections
         function renderAllSections() {
-            // Section 01
             document.getElementById('disp-photo').src = appData.profile.photo;
             document.getElementById('disp-name').innerText = appData.profile.name;
             document.getElementById('disp-title').innerText = appData.profile.title;
@@ -571,7 +554,6 @@
             document.getElementById('disp-bio').innerText = appData.profile.bio;
             document.getElementById('disp-phone-label').innerText = `Call (${appData.profile.phone})`;
 
-            // Section 02 - Vehicles Grid
             const vGrid = document.getElementById('vehicleGrid');
             vGrid.innerHTML = '';
             appData.vehicles.forEach(v => {
@@ -607,28 +589,28 @@
                 vGrid.appendChild(card);
             });
 
-            // Section 04 - Hotlines Grid
             const hGrid = document.getElementById('hotlinesGrid');
-            hGrid.innerHTML = '';
-            appData.hotlines.forEach(h => {
-                const card = document.createElement('div');
-                card.className = "p-4 rounded-2xl bg-toyota-cardBg border border-toyota-border hover:border-toyota-red/50 transition-all flex flex-col justify-between space-y-3";
-                card.innerHTML = `
-                    <div>
-                        <span class="text-[10px] font-bold text-toyota-red uppercase tracking-wider">${h.badge}</span>
-                        <h4 class="font-bold text-white text-sm">${h.name}</h4>
-                        <p class="text-xs text-slate-400">${h.sub}</p>
-                    </div>
-                    <button onclick="handlePhoneAction(event, '', '${h.number}')" class="w-full py-2 bg-neutral-900 hover:bg-neutral-800 text-slate-200 text-xs font-bold rounded-xl border border-toyota-border flex items-center justify-center space-x-2 active:scale-95">
-                        <i class="fa-solid fa-phone text-toyota-red"></i>
-                        <span>${h.number}</span>
-                    </button>
-                `;
-                hGrid.appendChild(card);
-            });
+            if (hGrid) {
+                hGrid.innerHTML = '';
+                appData.hotlines.forEach(h => {
+                    const card = document.createElement('div');
+                    card.className = "p-4 rounded-2xl bg-toyota-cardBg border border-toyota-border hover:border-toyota-red/50 transition-all flex flex-col justify-between space-y-3";
+                    card.innerHTML = `
+                        <div>
+                            <span class="text-[10px] font-bold text-toyota-red uppercase tracking-wider">${h.badge}</span>
+                            <h4 class="font-bold text-white text-sm">${h.name}</h4>
+                            <p class="text-xs text-slate-400">${h.sub}</p>
+                        </div>
+                        <button onclick="handlePhoneAction(event, '', '${h.number}')" class="w-full py-2 bg-neutral-900 hover:bg-neutral-800 text-slate-200 text-xs font-bold rounded-xl border border-toyota-border flex items-center justify-center space-x-2 active:scale-95">
+                            <i class="fa-solid fa-phone text-toyota-red"></i>
+                            <span>${h.number}</span>
+                        </button>
+                    `;
+                    hGrid.appendChild(card);
+                });
+            }
         }
 
-        // Open Admin Drawer and Populate Controls
         function openAdminDrawer() {
             document.getElementById('edit-photo').value = appData.profile.photo;
             document.getElementById('edit-name').value = appData.profile.name;
@@ -747,7 +729,6 @@
             showToast("Saved locally on this device!");
         }
 
-        // Clipboard Helper
         function copyToClipboardFallback(text) {
             try {
                 if (navigator.clipboard && window.isSecureContext) {
@@ -807,7 +788,6 @@
             }
         }
 
-        // Generate vCard Download
         function downloadVCard() {
             const vCardContent = [
                 'BEGIN:VCARD',
@@ -831,7 +811,6 @@
             showToast("vCard downloaded!");
         }
 
-        // Modal Helpers
         function openModal(id) {
             const el = document.getElementById(id);
             if (id === 'adminDrawer') {
@@ -870,9 +849,7 @@
             closeModal('qrModal');
         }
 
-        // FIXED EXPORT TOOL: Bakes current appData into HTML script and forces Admin Drawer closed
         function exportFullCode() {
-            // First save any current input field values to appData
             appData.profile.photo = document.getElementById('edit-photo').value || appData.profile.photo;
             appData.profile.name = document.getElementById('edit-name').value || appData.profile.name;
             appData.profile.title = document.getElementById('edit-title').value || appData.profile.title;
@@ -889,21 +866,18 @@
 
             saveData();
 
-            // Clone full document text
             let docCopy = document.documentElement.outerHTML;
 
-            // 1. Ensure Admin Drawer is closed in exported code
+            // Force admin drawer to be closed (translate-x-full) in the exported code
             docCopy = docCopy.replace(/id="adminDrawer"\s+class="[^"]*"/, 'id="adminDrawer" class="fixed inset-y-0 right-0 w-full max-w-xl bg-toyota-black border-l border-toyota-border shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col"');
 
-            // 2. Inject updated appData into the hardcoded script tag
             const appDataJSON = JSON.stringify(appData, null, 4);
             const scriptReplacement = `<script id="appDataScript">\n        let appData = ${appDataJSON};\n    <\/script>`;
 
             docCopy = docCopy.replace(/<script id="appDataScript">[\s\S]*?<\/script>/, scriptReplacement);
 
-            // Copy output code
             copyToClipboardFallback("<!DOCTYPE html>\n<html lang=\"en\" class=\"scroll-smooth dark\">\n" + docCopy + "\n</html>");
-            showToast("GitHub Code Copied! Admin Drawer is closed & data is saved.");
+            showToast("GitHub Code Copied! Admin Drawer is strictly locked/closed.");
         }
 
         function showToast(msg) {
