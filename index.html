@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toyota Marketing Specialist | Monina Dela Cruz</title>
+    <title>Toyota Marketing Specialist | Official Digital Showroom</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -35,6 +35,7 @@
         }
     </script>
     <style>
+        /* Custom sleek scrollbar styling */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -105,7 +106,7 @@
                 <div class="md:col-span-4 flex flex-col items-center text-center">
                     <div class="relative">
                         <div class="w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden ring-4 ring-toyota-red/40 shadow-2xl bg-neutral-900">
-                            <img id="disp-photo" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80" alt="Monina Dela Cruz" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/171717/ffffff?text=Toyota+Specialist'">
+                            <img id="disp-photo" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&auto=format&fit=crop&q=80" alt="Toyota Specialist" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/171717/ffffff?text=Toyota+Specialist'">
                         </div>
                         <span class="absolute bottom-2 right-2 px-3 py-1 bg-emerald-500/90 text-white text-[10px] font-bold rounded-full border border-emerald-400 shadow-md flex items-center space-x-1">
                             <span class="w-2 h-2 rounded-full bg-white animate-ping"></span>
@@ -118,12 +119,12 @@
                 <div class="md:col-span-8 space-y-4 text-center md:text-left">
                     <div class="inline-flex items-center space-x-2 px-3 py-1 bg-toyota-red/10 border border-toyota-red/30 rounded-full text-toyota-red text-xs font-bold uppercase tracking-wider">
                         <i class="fa-solid fa-award"></i>
-                        <span id="disp-dealership">Toyota - Bacoor, Cavite</span>
+                        <span id="disp-dealership">Toyota Pasig Motors</span>
                     </div>
 
                     <div class="space-y-1">
-                        <h1 id="disp-name" class="text-3xl sm:text-4xl font-black text-white tracking-tight">Monina Dela Cruz</h1>
-                        <p id="disp-title" class="text-lg font-semibold text-toyota-red">Marketing Professional</p>
+                        <h1 id="disp-name" class="text-3xl sm:text-4xl font-black text-white tracking-tight">Mark Anthony Santos</h1>
+                        <p id="disp-title" class="text-lg font-semibold text-toyota-red">Senior Marketing Specialist & Finance Advisor</p>
                     </div>
 
                     <p id="disp-headline" class="text-sm sm:text-base font-medium text-slate-200">
@@ -418,14 +419,14 @@
         let logoClickTimer = null;
         const SECRET_PIN = "1234";
 
-        // Default Initial Data (Hardcoded with Monina Dela Cruz)
+        // Default Initial Data
         let appData = {
             profile: {
-                photo: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=500&auto=format&fit=crop&q=80",
-                name: "Monina Dela Cruz",
-                title: "Marketing Professional",
-                dealership: "Toyota - Bacoor, Cavite",
-                phone: "0995-3764-958",
+                photo: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&auto=format&fit=crop&q=80",
+                name: "Mark Anthony Santos",
+                title: "Senior Marketing Specialist & Finance Advisor",
+                dealership: "Toyota Pasig Motors",
+                phone: "+63 917 888 9012",
                 headline: '"Your Toyota Partner — From First Inquiry to First Drive."',
                 bio: "Providing seamless car buying experiences with guaranteed hassle-free auto loan approvals, flexible downpayment promos, and transparent quotations for all Toyota models."
             },
@@ -433,7 +434,7 @@
                 appForm: "https://docs.google.com",
                 fb: "https://facebook.com",
                 ig: "https://instagram.com",
-                wa: "https://wa.me/639953764958"
+                wa: "https://wa.me/639178889012"
             },
             vehicles: [
                 {
@@ -781,4 +782,107 @@
             if (e) e.preventDefault();
             const num = directNum || appData.profile.phone;
             
-            copy
+            copyToClipboardFallback(num);
+            showToast(`Phone number copied: ${num}`);
+        }
+
+        function handleAppFormClick(e) {
+            if (e) e.preventDefault();
+            const url = appData.socials?.appForm || "https://docs.google.com";
+            if (url && url !== '#') {
+                window.open(url, '_blank');
+            } else {
+                showToast("Application Form link not set yet. Edit in Admin drawer.");
+            }
+        }
+
+        function handleSocialClick(e, type) {
+            if (e) e.preventDefault();
+            const url = appData.socials[type.replace('disp-', '')] || '#';
+            if (url && url !== '#') {
+                window.open(url, '_blank');
+            } else {
+                showToast("Social link not set yet. Edit in Admin drawer.");
+            }
+        }
+
+        // Generate vCard Download
+        function downloadVCard() {
+            const vCardContent = [
+                'BEGIN:VCARD',
+                'VERSION:3.0',
+                `FN:${appData.profile.name}`,
+                `TITLE:${appData.profile.title}`,
+                `ORG:${appData.profile.dealership}`,
+                `TEL;TYPE=CELL:${appData.profile.phone}`,
+                `NOTE:${appData.profile.headline}`,
+                'END:VCARD'
+            ].join('\n');
+
+            const blob = new Blob([vCardContent], { type: 'text/vcard;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `${appData.profile.name.replace(/\s+/g, '_')}_Toyota.vcf`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("vCard downloaded!");
+        }
+
+        // Modal Helpers
+        function openModal(id) {
+            const el = document.getElementById(id);
+            if (id === 'adminDrawer') {
+                el.classList.remove('translate-x-full');
+            } else {
+                el.classList.remove('opacity-0', 'pointer-events-none');
+            }
+            if (id === 'qrModal') generateQR();
+        }
+
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            if (id === 'adminDrawer') {
+                el.classList.add('translate-x-full');
+            } else {
+                el.classList.add('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        function generateQR() {
+            const canvas = document.getElementById('qrcodeCanvas');
+            canvas.innerHTML = '';
+            new QRCode(canvas, {
+                text: window.location.href,
+                width: 160,
+                height: 160,
+                colorDark: "#0d0d0d",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function copyPageLink() {
+            copyToClipboardFallback(window.location.href);
+            showToast("Website link copied!");
+            closeModal('qrModal');
+        }
+
+        function exportFullCode() {
+            const code = document.documentElement.outerHTML;
+            copyToClipboardFallback(code);
+            showToast("Full website HTML code copied to clipboard!");
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
