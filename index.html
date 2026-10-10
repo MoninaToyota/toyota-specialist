@@ -49,9 +49,9 @@
             </div>
         </section>
 
-        <!-- 2. Vehicle Showcase & Financing Calculator -->
+        <!-- 2. Vehicle Showcase & Financing Estimator -->
         <section id="showcase" class="space-y-4">
-            <h2 class="text-xl font-bold text-gray-900 border-l-4 border-red-600 pl-3">Vehicle Showcase & Estimator</h2>
+            <h2 class="text-xl font-bold text-gray-900 border-l-4 border-red-600 pl-3">Vehicle Showcase & Calculator</h2>
             <div id="vehicle-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <!-- Vehicle Cards Injected via JS -->
             </div>
@@ -119,56 +119,86 @@
 
     <!-- Secret Admin Panel Modal -->
     <div id="admin-modal" class="fixed inset-0 bg-black/60 z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
-        <div class="bg-white w-full max-w-xl rounded-2xl shadow-2xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+        <div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl p-6 space-y-6 max-h-[90vh] overflow-y-auto">
             <div class="flex justify-between items-center border-b pb-3">
                 <h3 class="text-lg font-bold text-gray-900"><i class="fa-solid fa-user-gear text-red-600 mr-2"></i> Owner Admin Panel</h3>
                 <button id="close-admin" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
 
             <!-- Admin Form -->
-            <form id="admin-form" class="space-y-4 text-xs">
-                <!-- Profile Controls -->
-                <div class="space-y-2 border-b pb-3">
-                    <h4 class="font-bold text-gray-700 text-sm">Profile Settings</h4>
-                    <input type="text" id="edit-name" placeholder="Name" class="w-full p-2 border rounded">
-                    <input type="text" id="edit-title" placeholder="Title" class="w-full p-2 border rounded">
+            <form id="admin-form" class="space-y-6 text-xs">
+                <!-- Profile Settings -->
+                <div class="space-y-2 border-b pb-4">
+                    <h4 class="font-bold text-gray-800 text-sm">1. Profile Settings</h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label class="block font-semibold text-gray-600 mb-1">Full Name:</label>
+                            <input type="text" id="edit-name" placeholder="Name" class="w-full p-2 border rounded">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-600 mb-1">Job Title:</label>
+                            <input type="text" id="edit-title" placeholder="Title" class="w-full p-2 border rounded">
+                        </div>
+                    </div>
+                    <label class="block font-semibold text-gray-600 mb-1 mt-2">Bio Description:</label>
                     <textarea id="edit-bio" placeholder="Bio" class="w-full p-2 border rounded" rows="2"></textarea>
                 </div>
 
-                <!-- Contact Links & App Form -->
-                <div class="space-y-2 border-b pb-3">
-                    <h4 class="font-bold text-gray-700 text-sm">Links & Socials</h4>
-                    <label class="block font-semibold text-gray-600">Google Docs Application Form Link:</label>
-                    <input type="url" id="edit-app-link" placeholder="https://docs.google.com/document/d/..." class="w-full p-2 border rounded bg-red-50 font-mono">
-                    
-                    <label class="block font-semibold text-gray-600 mt-2">WhatsApp Link:</label>
-                    <input type="url" id="edit-wa-link" placeholder="https://wa.me/..." class="w-full p-2 border rounded font-mono">
-                    
-                    <label class="block font-semibold text-gray-600 mt-2">Facebook Link:</label>
-                    <input type="url" id="edit-fb-link" placeholder="https://facebook.com/..." class="w-full p-2 border rounded font-mono">
-                    
-                    <label class="block font-semibold text-gray-600 mt-2">Instagram Link:</label>
-                    <input type="url" id="edit-ig-link" placeholder="https://instagram.com/..." class="w-full p-2 border rounded font-mono">
+                <!-- Links & Social Media -->
+                <div class="space-y-2 border-b pb-4">
+                    <h4 class="font-bold text-gray-800 text-sm">2. Application Form & Contact Links</h4>
+                    <div class="space-y-3">
+                        <div class="bg-red-50 p-3 rounded-xl border border-red-200">
+                            <label class="block font-bold text-red-700 mb-1">Google Docs Application Form URL:</label>
+                            <input type="url" id="edit-app-link" placeholder="https://docs.google.com/document/d/..." class="w-full p-2 border border-red-300 rounded font-mono bg-white text-gray-800">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-600 mb-1">WhatsApp Link:</label>
+                            <input type="url" id="edit-wa-link" placeholder="https://wa.me/..." class="w-full p-2 border rounded font-mono">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-600 mb-1">Facebook Page Link:</label>
+                            <input type="url" id="edit-fb-link" placeholder="https://facebook.com/..." class="w-full p-2 border rounded font-mono">
+                        </div>
+                        <div>
+                            <label class="block font-semibold text-gray-600 mb-1">Instagram Profile Link:</label>
+                            <input type="url" id="edit-ig-link" placeholder="https://instagram.com/..." class="w-full p-2 border rounded font-mono">
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Hotline Controls -->
-                <div class="space-y-2 border-b pb-3">
-                    <h4 class="font-bold text-gray-700 text-sm">Hotlines (Comma Separated Name:Number)</h4>
-                    <input type="text" id="edit-hotlines" placeholder="Emergency Hotline: 09171234567, Roadside Assistance: 09181234567" class="w-full p-2 border rounded">
+                <!-- Vehicle Inventory Management -->
+                <div class="space-y-3 border-b pb-4">
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-gray-800 text-sm">3. Vehicle Inventory</h4>
+                        <button type="button" id="add-vehicle-btn" class="bg-green-600 text-white px-3 py-1 rounded-lg font-bold text-xs hover:bg-green-700 transition">
+                            <i class="fa-solid fa-plus mr-1"></i> Add Vehicle
+                        </button>
+                    </div>
+                    <div id="admin-vehicle-list" class="space-y-2 max-h-48 overflow-y-auto p-1 bg-gray-50 rounded-xl border border-gray-200">
+                        <!-- Vehicle Editable Rows Injected JS -->
+                    </div>
                 </div>
 
-                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl text-sm transition">
+                <!-- Hotlines -->
+                <div class="space-y-2 border-b pb-4">
+                    <h4 class="font-bold text-gray-800 text-sm">4. Driver's Lifeline Hotlines</h4>
+                    <p class="text-[10px] text-gray-500">Format: Name:Phone (separated by commas)</p>
+                    <input type="text" id="edit-hotlines" placeholder="Sales Inquiry: 09171234567, Emergency: 09181234567" class="w-full p-2 border rounded font-mono">
+                </div>
+
+                <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl text-sm transition shadow-md">
                     Save Edits to Live Website
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- Application Script -->
+    <!-- Application Logic -->
     <script>
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        // Default Site State
+        // Default Master Data
         const defaultData = {
             name: "Toyota Marketing Specialist",
             title: "Authorized Sales Consultant",
@@ -176,141 +206,4 @@
             appFormUrl: "https://docs.google.com",
             whatsappUrl: "https://wa.me/",
             facebookUrl: "https://facebook.com",
-            instagramUrl: "https://instagram.com",
-            hotlines: [
-                { name: "Sales Inquiry Hotline", phone: "09170000000" },
-                { name: "24/7 Roadside Assistance", phone: "09180000000" }
-            ],
-            vehicles: [
-                { id: 1, name: "Vios", price: 732000, promo: "Low DP Promo Available" },
-                { id: 2, name: "Innova", price: 1261000, promo: "Free 1-Yr Insurance" },
-                { id: 3, name: "Fortuner", price: 1769000, promo: "Exclusive Cash Discount" },
-                { id: 4, name: "Hilux", price: 885000, promo: "Low Monthly Option" }
-            ]
-        };
-
-        // Load Data from LocalStorage
-        function loadData() {
-            const saved = localStorage.getItem('toyota_site_data');
-            return saved ? JSON.parse(saved) : defaultData;
-        }
-
-        // Save Data
-        function saveData(data) {
-            localStorage.setItem('toyota_site_data', JSON.stringify(data));
-            renderSite();
-        }
-
-        // Render Page Contents
-        function renderSite() {
-            const data = loadData();
-
-            // Profile
-            document.getElementById('disp-name').textContent = data.name;
-            document.getElementById('disp-title').textContent = data.title;
-            document.getElementById('disp-bio').textContent = data.bio;
-
-            // Links
-            document.getElementById('btn-app-form').href = data.appFormUrl || "#";
-            document.getElementById('btn-whatsapp').href = data.whatsappUrl || "#";
-            document.getElementById('btn-facebook').href = data.facebookUrl || "#";
-            document.getElementById('btn-instagram').href = data.instagramUrl || "#";
-
-            // Vehicles
-            const grid = document.getElementById('vehicle-grid');
-            grid.innerHTML = '';
-            data.vehicles.forEach(v => {
-                grid.innerHTML += `
-                    <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm space-y-2">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="font-bold text-gray-900">${v.name}</h3>
-                                <p class="text-xs text-gray-500">Starts at ₱${v.price.toLocaleString()}</p>
-                            </div>
-                            <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded-full">${v.promo}</span>
-                        </div>
-                    </div>
-                `;
-            });
-
-            // Hotlines
-            const hotlineList = document.getElementById('hotline-list');
-            hotlineList.innerHTML = '';
-            data.hotlines.forEach(h => {
-                hotlineList.innerHTML += `
-                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-100">
-                        <span class="text-xs font-semibold text-gray-700">${h.name}</span>
-                        <a href="tel:${h.phone}" class="bg-red-600 text-white text-xs px-3 py-1.5 rounded-lg font-bold hover:bg-red-700 transition flex items-center gap-1">
-                            <i class="fa-solid fa-phone text-[10px]"></i> ${h.phone}
-                        </a>
-                    </div>
-                `;
-            });
-        }
-
-        // Triple-Tap Gesture Detection
-        let tapCount = 0;
-        let tapTimer = null;
-        document.getElementById('logo-trigger').addEventListener('click', () => {
-            tapCount++;
-            clearTimeout(tapTimer);
-            if (tapCount === 3) {
-                tapCount = 0;
-                const pin = prompt("Enter Admin PIN:");
-                if (pin === "1234") {
-                    openAdminModal();
-                } else if (pin !== null) {
-                    alert("Incorrect PIN!");
-                }
-            } else {
-                tapTimer = setTimeout(() => { tapCount = 0; }, 800);
-            }
-        });
-
-        // Admin Modal Handlers
-        const modal = document.getElementById('admin-modal');
-        function openAdminModal() {
-            const data = loadData();
-            document.getElementById('edit-name').value = data.name;
-            document.getElementById('edit-title').value = data.title;
-            document.getElementById('edit-bio').value = data.bio;
-            document.getElementById('edit-app-link').value = data.appFormUrl;
-            document.getElementById('edit-wa-link').value = data.whatsappUrl;
-            document.getElementById('edit-fb-link').value = data.facebookUrl;
-            document.getElementById('edit-ig-link').value = data.instagramUrl;
-            document.getElementById('edit-hotlines').value = data.hotlines.map(h => `${h.name}:${h.phone}`).join(', ');
-            modal.classList.remove('hidden');
-        }
-
-        document.getElementById('close-admin').addEventListener('click', () => {
-            modal.classList.add('hidden');
-        });
-
-        // Save Admin Form
-        document.getElementById('admin-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const data = loadData();
-            data.name = document.getElementById('edit-name').value;
-            data.title = document.getElementById('edit-title').value;
-            data.bio = document.getElementById('edit-bio').value;
-            data.appFormUrl = document.getElementById('edit-app-link').value;
-            data.whatsappUrl = document.getElementById('edit-wa-link').value;
-            data.facebookUrl = document.getElementById('edit-fb-link').value;
-            data.instagramUrl = document.getElementById('edit-ig-link').value;
-
-            const hotlineStr = document.getElementById('edit-hotlines').value;
-            data.hotlines = hotlineStr.split(',').map(item => {
-                const parts = item.split(':');
-                return { name: parts[0]?.trim() || "Hotline", phone: parts[1]?.trim() || "" };
-            }).filter(h => h.phone !== "");
-
-            saveData(data);
-            modal.classList.add('hidden');
-            alert("Website updated successfully!");
-        });
-
-        // Initialize
-        renderSite();
-    </script>
-</body>
-</html>
+            instagramUrl: "
